@@ -21,6 +21,7 @@ type EquipesServices = {
     "equId": number; 
     "equDescricao": string; 
     "equModId": number;
+    "equCorPadrao": string;
     "equStatus": string;
 }
 
@@ -70,6 +71,8 @@ export default function Home() {
     const [eventos, setEventos] = useState<Array<EventosServices>>([]);
     const [equipes, setEquipes] = useState<Array<EquipesServices>>([]);
     const [movimentos, setMovimentos] = useState<Array<ServicesProps>>([]);
+
+    const cor = '#D97706';
     
     const [openModal, setOpenModal] = useState(false)
     const [openModal2, setOpenModal2] = useState(false)
@@ -299,22 +302,6 @@ export default function Home() {
     function handleSearch() {
         setAtualiza(1);
     }
-    
-    const handleClick = () => {
-        setShowOptions(!showOptions);      
-    };
-
-    const itemsModal = [
-        {
-          opc: '1',
-          title: 'Controle Social',
-          icon: 'social',
-          itens: [
-            {label:'Conselho Municipal de Transparência',link:'/conselhomunicipal', target:'_self'},
-            {label:'Conselho de Eficácia de Gestão',link:'/conselhodegestao', target:'_self'},
-          ]
-        },
-    ]
 
     return (
         <div className='w-full h-auto z-30 bg-gray-300'>
@@ -433,8 +420,7 @@ export default function Home() {
                                 <div className='flex flex-col w-full h-full text-black'>
                                     <div className="grid grid-cols-1 gap-1 md:grid-cols-3 md:gap-4 ml-1 px-0 py-0 ">            
                                     {movimentos?.map((item:any, idx) => {
-                                        return <button key={idx} onClick={() => setOpenModal(true)}> 
-                                                                               
+                                    return <Link key={idx} href={`/Aposta/${item.movId}`}>                                                                               
                                         <div className='bg-white mt-1 mb-3 rounded overflow-hidden shadow-lg hover:bg-[#008C3D]/40'> 
                                             <div className="flex flex-row items-start justify-between px-2 ">
                                                 <div className="flex flex-col items-start px-2 py-2">
@@ -451,29 +437,35 @@ export default function Home() {
                                                 </div>                
                                             </div>
                                             <div className="flex flex-row items-start justify-between px-2 py-0 mt-1 ">
-                                                <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">{item.timeA_desc}</div>
+                                                <div className={`flex flex-col items-start px-2 py-1`}>
+                                                    <span className={`text-base font-bold mb-0`}>{item.timeA_desc}</span>
                                                 </div>  
-                                                <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">X</div>
+                                                <div className={`flex flex-col items-start px-2 py-1`}>
+                                                    <span className="text-base font-bold mb-0">X</span>
                                                 </div>  
-                                                <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">{item.timeC_desc}</div>
+                                                <div className={`flex flex-col items-start px-2 py-1`}>
+                                                    <span className={`text-base font-bold mb-0`}>{item.timeC_desc}</span>
                                                 </div>                                  
                                             </div>
                                             <div className="flex flex-row items-start justify-between px-2 py-0 ">
                                                 <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">{item.movPayout01}</div>
+                                                    <div className="w-20 text-base bg-slate-300 rounded-md font-bold mb-0">
+                                                        {parseFloat(item.movPayout01).toFixed(2)}
+                                                    </div>
                                                 </div>  
                                                 <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">{item.movPayout02}</div>
+                                                    <div className="w-20 text-base bg-slate-300 rounded-md font-bold mb-0">
+                                                    {parseFloat(item.movPayout02).toFixed(2)}                                                      
+                                                    </div>
                                                 </div>  
                                                 <div className="flex flex-col items-start px-2 py-1">
-                                                    <div className="text-base font-bold mb-0">{item.movPayout03}</div>
-                                                </div> 
+                                                    <div className="w-20 text-base bg-slate-300 rounded-md font-bold mb-0">
+                                                    {parseFloat(item.movPayout03).toFixed(2)}
+                                                   </div>
+                                                </div>    
                                             </div>                                            
                                         </div>                                                            
-                                    </button>                  
+                                    </Link>                  
                                     })}
                                     </div>
                                 </div>
